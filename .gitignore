@@ -1,6 +1,7 @@
 node_modules/
-.next/
-out/
+.nuxt/
+.output/
+.data/
 dist/
 .DS_Store
 *.log
@@ -13,5 +14,7 @@ coverage/
 .turbo/
 .vercel/
 .tsbuildinfo
-next-env.d.ts
 .eslintcache
+.wrangler/
+test-results/
+.lighthouseci/

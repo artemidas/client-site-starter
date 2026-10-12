@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------
+   Brand tokens. The values are sourced from content/branding.ts via
+   siteConfig.branding; the global CSS is generated at build time
+   from that single source. Do not hard-code colors in components.
+   ---------------------------------------------------------------- */
+
+@theme {
+  --font-heading: var(--font-heading-stack);
+  --font-sans: var(--font-body-stack);
+
+  --color-primary: var(--brand-primary);
+  --color-primary-fg: var(--brand-primary-fg);
+  --color-accent: var(--brand-accent);
+  --color-accent-fg: var(--brand-accent-fg);
+  --color-bg: var(--brand-bg);
+  --color-surface: var(--brand-surface);
+  --color-surface-alt: var(--brand-surface-alt);
+  --color-text: var(--brand-text);
+  --color-muted: var(--brand-muted);
+  --color-border: var(--brand-border);
+  --color-focus: var(--brand-focus);
+
+  --radius-sm: var(--brand-radius-sm);
+  --radius-md: var(--brand-radius-md);
+  --radius-lg: var(--brand-radius-lg);
+  --radius-pill: var(--brand-radius-pill);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    /* Brand tokens are injected at server-render time by server/plugins/brand-css.ts
+       from content/branding.ts. Values are written into the same custom properties
+       (--brand-*) the @theme block above consumes. Do not hard-code brand colors
+       in components — change content/branding.ts instead. */
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01", "ss03";
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-primary-fg);
+  }
+
+  /* Ensure the skip link is the first focusable element on every page. */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--color-primary);
+    color: var(--color-primary-fg);
+    border-radius: var(--radius-sm);
+    transform: translateY(-200%);
+    transition: transform 120ms ease;
+    z-index: 100;
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-prose {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.125rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-primary-fg);
+  }
+  .btn-primary:hover {
+    filter: brightness(0.92);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+  .btn-secondary:hover {
+    background: var(--color-surface-alt);
+  }
+  .btn-accent {
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  .field-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .field-hint {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+  .field-error {
+    color: oklch(55% 0.18 25);
+    font-size: 0.85rem;
+  }
+  .input,
+  .textarea {
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+  }
+  .input:focus,
+  .textarea:focus {
+    border-color: var(--color-focus);
+    outline: 2px solid var(--color-focus);
+    outline-offset: 1px;
+  }
+  .input[aria-invalid="true"],
+  .textarea[aria-invalid="true"] {
+    border-color: oklch(55% 0.18 25);
+  }
+
+  /* The honeypot must not be visible to humans. */
+  .hp-hidden {
+    position: absolute !important;
+    left: -10000px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+  }
+}
