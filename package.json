@@ -1,0 +1,27 @@
+{
+  "name": "client-site-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Config-driven marketing site starter: Next.js + Tailwind, static export, Cloudflare Pages, Resend contact form.",
+  "engines": {
+    "node": ">=20.9"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "check:config": "tsx scripts/check-config.ts",
+    "build": "npm run check:config && next build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "verify": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "preview": "npm run build && wrangler pages dev out",
+    "lighthouse": "tsx scripts/lighthouse.ts",
+    "deploy": "tsx scripts/deploy.ts"
+  },
+  "dependencies": {
+    "next": "^16.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "zod": "^4.6.7"
+  }
+}
