@@ -19,3 +19,4 @@ coverage/
 .wrangler/
 test-results/
 .lighthouseci/
+.claude/
